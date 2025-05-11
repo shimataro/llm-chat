@@ -10,7 +10,7 @@
 
 ```bash
 $ pipenv shell
-(llm-chat) $ pipenv install
+(llm-chat) $ pipenv sync
 (llm-chat) $ python llm-chat.py
 ```
 
