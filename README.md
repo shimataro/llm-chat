@@ -80,12 +80,12 @@ llm = LLM("microsoft/phi-2")
 
 2025/05/11時点で動作確認したモデルは以下のとおりです。
 
-|識別子|モデル名|URL|
-|---|---|---|
-|`elyza/ELYZA-japanese-Llama-2-7b-instruct`|ELYZA-japanese-Llama-2-7b|<https://huggingface.co/elyza/ELYZA-japanese-Llama-2-7b-instruct>|
-|`microsoft/phi-2`|Phi-2|<https://huggingface.co/microsoft/phi-2>|
-|`cyberagent/open-calm-7b`|OpenCALM|<https://huggingface.co/cyberagent/open-calm-7b>|
-|`rinna/youri-7b-chat`|youri|<https://huggingface.co/rinna/youri-7b-chat>|
+|識別子|モデル名|主な対応言語|URL|
+|---|---|---|---|
+|`elyza/ELYZA-japanese-Llama-2-7b-instruct`|ELYZA-japanese-Llama-2-7b|日本語/英語|<https://huggingface.co/elyza/ELYZA-japanese-Llama-2-7b-instruct>|
+|`microsoft/phi-2`|Phi-2|英語|<https://huggingface.co/microsoft/phi-2>|
+|`cyberagent/open-calm-7b`|OpenCALM|日本語|<https://huggingface.co/cyberagent/open-calm-7b>|
+|`rinna/youri-7b-chat`|youri|日本語/英語|<https://huggingface.co/rinna/youri-7b-chat>|
 
 ### モデルによって応答がおかしい / エラーが起きる
 
