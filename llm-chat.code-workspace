@@ -1,0 +1,19 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+    "python.analysis.typeCheckingMode": "standard"
+  },
+  "extensions": {
+    "recommendations": [
+      "davidanson.vscode-markdownlint",
+      "donjayamanne.python-environment-manager",
+      "editorconfig.editorconfig",
+      "ms-python.python",
+      "ms-python.vscode-pylance",
+    ]
+  }
+}
