@@ -2,11 +2,7 @@
 
 いろんなLLMでチャット！
 
-## コード例
-
-[llm-chat.py](./llm-chat.py)参照
-
-## コード例の動かし方
+## 動かし方
 
 ```bash
 $ pipenv shell
@@ -66,26 +62,62 @@ llm.print_inference_result(input_text, max_new_tokens=256)
 
 ### 他のモデルも使いたい
 
-[llm-chat.py](./llm-chat.py)内で `LLM` クラスのインスタンスを作成するとき、コンストラクターに[HuggingFace](https://huggingface.co/)のモデル名を指定してください。
+[llm-chat.py](./llm-chat.py)内で `LLM` クラスのインスタンスを作成するとき、コンストラクターの第1引数に[HuggingFace](https://huggingface.co/)のモデル名を指定してください。
 
 ```python
 # 指定例
 llm = LLM("microsoft/phi-2")
+
+# またはキーワードパラメーターで指定
+llm = LLM(model_name="microsoft/phi-2")
 ```
 
 デフォルトでは `elyza/ELYZA-japanese-Llama-2-7b-instruct` を使っています。
 
-注意点として、HuggingFaceの認証やログインが不要なモデルを指定してください。
-まだ認証処理を入れていないので、認証が必要なモデルはエラーが出ます。
+### HuggingFaceの認証やログインが必要なモデルを使いたい
 
-2025/05/11時点で動作確認したモデルは以下のとおりです。
+[llm-chat.py](./llm-chat.py)内で `LLM` クラスのインスタンスを作成するとき、コンストラクターの第2引数にアクセストークンを指定してください。
 
-|識別子|モデル名|主な対応言語|URL|
+```python
+# 指定例
+llm = LLM("meta-llama/Meta-Llama-3-8B-Instruct", "YOUR_ACCESS_TOKEN")
+
+# またはキーワードパラメーターで指定
+llm = LLM(model_name="meta-llama/Meta-Llama-3-8B-Instruct", access_token="YOUR_ACCESS_TOKEN")
+```
+
+アクセストークンは、以下の手順で作成してください。
+
+1. [Hugging Face](https://huggingface.co/)にサインアップ＆ログイン
+1. [アクセストークン](https://huggingface.co/settings/tokens)のページから[トークンを作成](https://huggingface.co/settings/tokens/new?tokenType=read)
+    * "Token type" は "READ" でOK
+    * 名前は自分でわかりやすいものを指定（ `LLM Chat` など）
+1. 生成された `hf_` で始まる文字列がアクセストークン
+
+アクセストークンは一度しか表示されないので、忘れないように付箋紙にメモしてディスプレイに貼っておいてください。
+
+### どうやってモデルを探せばいいの？
+
+[モデル一覧ページ](https://huggingface.co/models)の "Natural Language Processing" から興味のあるタグを選んでください。
+
+* [Text Generation](https://huggingface.co/models?pipeline_tag=text-generation&sort=trending)
+* [Translation](https://huggingface.co/models?pipeline_tag=translation&sort=trending)
+* [Text2Text Generation](https://huggingface.co/models?pipeline_tag=text2text-generation&sort=trending)
+
+### 動作確認したモデルは？
+
+2025/05/12時点で動作確認したモデルは以下のとおりです。
+
+|モデル名|ジャンル|主な対応言語|アクセストークン|
 |---|---|---|---|
-|`elyza/ELYZA-japanese-Llama-2-7b-instruct`|ELYZA-japanese-Llama-2-7b|日本語/英語|<https://huggingface.co/elyza/ELYZA-japanese-Llama-2-7b-instruct>|
-|`microsoft/phi-2`|Phi-2|英語|<https://huggingface.co/microsoft/phi-2>|
-|`cyberagent/open-calm-7b`|OpenCALM|日本語|<https://huggingface.co/cyberagent/open-calm-7b>|
-|`rinna/youri-7b-chat`|youri|日本語/英語|<https://huggingface.co/rinna/youri-7b-chat>|
+|[`elyza/ELYZA-japanese-Llama-2-7b-instruct`](https://huggingface.co/elyza/ELYZA-japanese-Llama-2-7b-instruct)|Text Generation|日本語/英語|不要|
+|[`microsoft/phi-2`](https://huggingface.co/microsoft/phi-2)|Text Generation|英語|不要|
+|[`cyberagent/open-calm-7b`](https://huggingface.co/cyberagent/open-calm-7b)|Text Generation|日本語|不要|
+|[`rinna/youri-7b-chat`](https://huggingface.co/rinna/youri-7b-chat)|Text Generation|日本語/英語|不要|
+|[`meta-llama/Meta-Llama-3-8B-Instruct`](https://huggingface.co/meta-llama/Meta-Llama-3-8B-Instruct)|Text Generation|日本語/英語|要|
+
+動作確認できたモデルがあったら教えてください。
+あとPRください。
 
 ### モデルによって応答がおかしい / エラーが起きる
 
