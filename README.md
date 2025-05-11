@@ -44,6 +44,12 @@ See you!
 (llm-chat) $
 ```
 
+## JupyterLab (Notebook) 上での動かし方
+
+[llm-chat.ipynb](./llm-chat.ipynb)をJupyterLab (Notebook)に読み込ませたあと、全てのセルを実行してください（⏩）。
+
+依存パッケージやモデルファイルなどのダウンロードが終わった後、チャットができるようになります。
+
 ## Q&A
 
 ### 長い応答が途中で切れる
