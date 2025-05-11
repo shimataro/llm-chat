@@ -1,4 +1,4 @@
-from typing import Generator
+from typing import Generator, Optional
 import threading
 
 import torch
@@ -8,7 +8,7 @@ from transformers.generation.streamers import TextIteratorStreamer
 
 
 class LLM:
-    def __init__(self, model_name: str = "elyza/ELYZA-japanese-Llama-2-7b-instruct"):
+    def __init__(self, model_name: str="elyza/ELYZA-japanese-Llama-2-7b-instruct", access_token: Optional[str]=None):
         """ LLMの初期化
 
         :param model_name: モデル名
@@ -25,8 +25,13 @@ class LLM:
             model_name,
             device_map="auto",
             torch_dtype=dtype,
+            token=access_token,
         )
-        self._tokenizer = AutoTokenizer.from_pretrained(model_name, use_fast=True)
+        self._tokenizer = AutoTokenizer.from_pretrained(
+            model_name,
+            use_fast=True,
+            token=access_token,
+        )
 
 
     def infer(self, input_text: str, max_new_tokens: int=128, do_sample: bool=True, temperature: float=0.7, top_p: float=0.9) -> Generator[str, None, None]:
