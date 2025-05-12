@@ -7,9 +7,6 @@ on:
     branches:
     - "**"
 
-env:
-  PYTHON_VERSION: "3.10.11" # from Pipenv.lock
-
 jobs:
   verify:
     name: Lint
@@ -18,10 +15,14 @@ jobs:
     - name: Checkout source codes
       uses: actions/checkout@v4
 
+    - name: Extract python version from Pipfile.lock
+      id: get-python-version
+      run: echo "python_version=$(jq -r '._meta.requires.python_full_version' Pipfile.lock || echo '')" >> $GITHUB_OUTPUT
+
     - name: Setup Python
       uses: actions/setup-python@v5
       with:
-        python-version: ${{ env.PYTHON_VERSION }}
+        python-version: ${{ steps.get-python-version.outputs.python_version }}
         cache: 'pipenv'
     - name: Install pipenv
       run: |
