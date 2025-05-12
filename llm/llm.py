@@ -1,3 +1,4 @@
+# LLMクラス
 from typing import Generator, Optional
 import threading
 
@@ -8,7 +9,7 @@ from transformers.generation.streamers import TextIteratorStreamer
 
 
 class LLM:
-    def __init__(self, model_name: str="elyza/ELYZA-japanese-Llama-2-7b-instruct", access_token: Optional[str]=None):
+    def __init__(self, model_name: str = "elyza/ELYZA-japanese-Llama-2-7b-instruct", access_token: Optional[str] = None):
         """ LLMの初期化
 
         :param model_name: モデル名
@@ -33,8 +34,7 @@ class LLM:
             token=access_token,
         )
 
-
-    def infer(self, input_text: str, max_new_tokens: int=128, do_sample: bool=True, temperature: float=0.7, top_p: float=0.9) -> Generator[str, None, None]:
+    def infer(self, input_text: str, max_new_tokens: int = 128, do_sample: bool = True, temperature: float = 0.7, top_p: float = 0.9) -> Generator[str, None, None]:
         """ 推論
 
         :param input_text: 入力テキスト
@@ -75,8 +75,7 @@ class LLM:
         for token in streamer:
             yield token
 
-
-    def print_inference_result(self, input_text: str, max_new_tokens: int=128, do_sample: bool=True, temperature: float=0.7, top_p: float=0.9) -> None:
+    def print_inference_result(self, input_text: str, max_new_tokens: int = 128, do_sample: bool = True, temperature: float = 0.7, top_p: float = 0.9) -> None:
         """ 推論結果を出力
 
         :param input_text: 入力テキスト
@@ -92,7 +91,6 @@ class LLM:
 
         # 出力の終端
         print()
-
 
     def _prompt(self, input_text: str) -> str:
         """ 入力文字列から、モデルに合わせたプロンプトを生成する

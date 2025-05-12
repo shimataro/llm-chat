@@ -1,3 +1,4 @@
+# チャットアプリケーション
 import sys
 
 from llm.llm import LLM
