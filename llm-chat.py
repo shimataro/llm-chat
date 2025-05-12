@@ -7,7 +7,7 @@ from llm.llm import LLM
 def main(_argv: list[str]) -> int:
     """ メイン関数
 
-    :return: 終了コード
+    :return: 終了ステータス
     """
     # モデルの初期化
     llm = LLM()
