@@ -1,6 +1,6 @@
 # LLMクラス
-from typing import Generator, Optional
 import threading
+from typing import Generator, Optional
 
 import torch
 from transformers.models.auto.tokenization_auto import AutoTokenizer
@@ -20,16 +20,11 @@ class LLM:
         """
         self._model_name = model_name
 
-        dtype: str | torch.dtype = "auto"
-        if torch.cuda.is_available():
-            # CUDAが有効ならfloat16を使う（"auto"のままだとV100環境でfloat32を選ぶことがある）
-            dtype = torch.float16
-
         # トークナイザーとモデルを読み込み
         self._model = AutoModelForCausalLM.from_pretrained(
             model_name,
             device_map="auto",
-            torch_dtype=dtype,
+            torch_dtype=_dtype(),
             token=access_token,
         )
         self._tokenizer = AutoTokenizer.from_pretrained(
@@ -113,7 +108,7 @@ class LLM:
             # トークンを1つずつ出力
             print(token, end="", flush=True)
 
-        # 出力の終端
+        # 出力の終端で改行
         print()
 
     def _prompt(self, input_text: str) -> str:
@@ -166,3 +161,15 @@ class LLM:
 
         # デフォルト（そのまま）
         return input_text
+
+
+def _dtype() -> torch.dtype | str:
+    """ データ型を取得
+
+    :return: データ型
+    """
+    if torch.cuda.is_available():
+        # CUDAが有効ならfloat16を使う（"auto"のままだとV100環境でfloat32を選ぶことがある）
+        return torch.float16
+
+    return "auto"
