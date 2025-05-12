@@ -74,7 +74,15 @@ llm = LLM(model_name="microsoft/phi-2")
 
 デフォルトでは `elyza/ELYZA-japanese-Llama-2-7b-instruct` を使っています。
 
-### HuggingFaceの認証やログインが必要なモデルを使いたい
+### どうやってモデルを探せばいいの？
+
+[モデル一覧ページ](https://huggingface.co/models)の "Natural Language Processing" から興味のあるタグを選んでください。
+
+* [Text Generation](https://huggingface.co/models?pipeline_tag=text-generation&sort=trending)
+* [Translation](https://huggingface.co/models?pipeline_tag=translation&sort=trending)
+* [Text2Text Generation](https://huggingface.co/models?pipeline_tag=text2text-generation&sort=trending)
+
+### 認証やログインが必要なモデルを使いたい
 
 [llm-chat.py](./llm-chat.py)内で `LLM` クラスのインスタンスを作成するとき、コンストラクターの第2引数にアクセストークンを指定してください。
 
@@ -96,15 +104,7 @@ llm = LLM(model_name="meta-llama/Meta-Llama-3-8B-Instruct", access_token="YOUR_A
 
 アクセストークンは一度しか表示されないので、忘れないように付箋紙にメモしてディスプレイに貼っておいてください。
 
-### どうやってモデルを探せばいいの？
-
-[モデル一覧ページ](https://huggingface.co/models)の "Natural Language Processing" から興味のあるタグを選んでください。
-
-* [Text Generation](https://huggingface.co/models?pipeline_tag=text-generation&sort=trending)
-* [Translation](https://huggingface.co/models?pipeline_tag=translation&sort=trending)
-* [Text2Text Generation](https://huggingface.co/models?pipeline_tag=text2text-generation&sort=trending)
-
-### 動作確認したモデルは？
+### 動作確認したモデルはある？
 
 2025/05/12時点で動作確認したモデルは以下のとおりです。
 
@@ -116,8 +116,8 @@ llm = LLM(model_name="meta-llama/Meta-Llama-3-8B-Instruct", access_token="YOUR_A
 |[`rinna/youri-7b-chat`](https://huggingface.co/rinna/youri-7b-chat)|Text Generation|日本語/英語|不要|
 |[`meta-llama/Meta-Llama-3-8B-Instruct`](https://huggingface.co/meta-llama/Meta-Llama-3-8B-Instruct)|Text Generation|日本語/英語|要|
 
-動作確認できたモデルがあったら教えてください。
-あとPRください。
+動作確認できたモデルがあったらこの表に載せるので教えてください。
+あるいは修正PRください。
 
 ### モデルによって応答がおかしい / エラーが起きる
 
