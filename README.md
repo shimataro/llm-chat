@@ -112,16 +112,16 @@ llm.print_inference_result(input_text, max_new_tokens=256)
 
 ### 動作確認したモデルはある？
 
-2025/05/12時点で動作確認したモデルは以下のとおりです。
+2025/05/13時点で動作確認したモデルは以下のとおりです。
 
 |モデル名|ジャンル|日本語対応|アクセストークン|
 |---|---|---|---|
-|[`elyza/ELYZA-japanese-Llama-2-7b-instruct`](https://huggingface.co/elyza/ELYZA-japanese-Llama-2-7b-instruct)|Text Generation|○|不要|
-|[`microsoft/phi-2`](https://huggingface.co/microsoft/phi-2)|Text Generation|×|不要|
 |[`cyberagent/open-calm-7b`](https://huggingface.co/cyberagent/open-calm-7b)|Text Generation|○|不要|
-|[`rinna/youri-7b-chat`](https://huggingface.co/rinna/youri-7b-chat)|Text Generation|○|不要|
-|[`meta-llama/Meta-Llama-3-8B-Instruct`](https://huggingface.co/meta-llama/Meta-Llama-3-8B-Instruct)|Text Generation|△|要|
+|[`elyza/ELYZA-japanese-Llama-2-7b-instruct`](https://huggingface.co/elyza/ELYZA-japanese-Llama-2-7b-instruct)|Text Generation|○|不要|
 |[`google/gemma-7b-it`](https://huggingface.co/google/gemma-7b-it)|Text Generation|△|要|
+|[`meta-llama/Meta-Llama-3-8B-Instruct`](https://huggingface.co/meta-llama/Meta-Llama-3-8B-Instruct)|Text Generation|△|要|
+|[`microsoft/phi-2`](https://huggingface.co/microsoft/phi-2)|Text Generation|×|不要|
+|[`rinna/youri-7b-chat`](https://huggingface.co/rinna/youri-7b-chat)|Text Generation|○|不要|
 
 動作確認できたモデルがあったらこの表に載せるので教えてください。
 あるいは修正PRください。
