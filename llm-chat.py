@@ -49,7 +49,10 @@ def main(args: Arguments) -> int:
     # モデルの初期化
     llm = LLM(args.model_name, args.access_token)
 
+    print()
     print("Now, let's talk!")
+    print("Type 'exit' to end the conversation.")
+    print()
 
     # ひたすらチャット
     while True:
@@ -58,7 +61,7 @@ def main(args: Arguments) -> int:
             print("> ", end="", flush=True)
 
             input_text = input().strip()
-            if input_text in ("exit", "quit"):
+            if input_text == "exit":
                 break
 
             llm.print_inference_result(input_text)
