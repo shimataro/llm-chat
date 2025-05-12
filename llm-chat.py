@@ -4,7 +4,7 @@ from dataclasses import dataclass
 import sys
 from typing import Optional, Sequence
 
-from llm.llm import LLM
+from libs.llm import LLM
 
 
 @dataclass
