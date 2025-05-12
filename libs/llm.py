@@ -145,7 +145,7 @@ class LLM:
 
         if (
             "llama-2" in model_name or "llama2" in model_name or
-            "mistral" in model_name or "gemma" in model_name
+            "mistral" in model_name
         ):
             return f"<s>[INST] {input_text} [/INST]</s>"
 
