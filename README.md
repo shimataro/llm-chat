@@ -42,7 +42,7 @@ See you!
 
 ## JupyterLab (Notebook) 上での動かし方
 
-[llm-chat.ipynb](./llm-chat.ipynb)をJupyterLab (Notebook)に読み込ませたあと、全てのセルを実行してください（⏩）。
+[llm-chat.ipynb](./llm-chat.ipynb)をJupyterLab (Notebook)で開き、⏩ボタンをクリックして全てのセルを実行してください。
 
 依存パッケージやモデルファイルなどのダウンロードが終わった後、チャットができるようになります。
 
@@ -62,14 +62,11 @@ llm.print_inference_result(input_text, max_new_tokens=256)
 
 ### 他のモデルも使いたい
 
-[llm-chat.py](./llm-chat.py)内で `LLM` クラスのインスタンスを作成するとき、コンストラクターの第1引数に[HuggingFace](https://huggingface.co/)のモデル名を指定してください。
+チャット起動時に、コマンドライン引数 `--model-name` （または `-m` ）を指定してください。
 
-```python
-# 指定例
-llm = LLM("microsoft/phi-2")
-
-# またはキーワードパラメーターで指定
-llm = LLM(model_name="microsoft/phi-2")
+```bash
+(llm-chat) $ python llm-chat.py --model-name microsoft/phi-2
+(llm-chat) $ python llm-chat.py -m microsoft/phi-2
 ```
 
 デフォルトでは `elyza/ELYZA-japanese-Llama-2-7b-instruct` を使っています。
@@ -79,19 +76,17 @@ llm = LLM(model_name="microsoft/phi-2")
 [モデル一覧ページ](https://huggingface.co/models)の "Natural Language Processing" から興味のあるタグを選んでください。
 
 * [Text Generation](https://huggingface.co/models?pipeline_tag=text-generation&sort=trending)
-* [Translation](https://huggingface.co/models?pipeline_tag=translation&sort=trending)
 * [Text2Text Generation](https://huggingface.co/models?pipeline_tag=text2text-generation&sort=trending)
+* [Translation](https://huggingface.co/models?pipeline_tag=translation&sort=trending)
 
 ### 認証やログインが必要なモデルを使いたい
 
-[llm-chat.py](./llm-chat.py)内で `LLM` クラスのインスタンスを作成するとき、コンストラクターの第2引数にアクセストークンを指定してください。
+チャット起動時に、コマンドライン引数 `--access-token` （または `-t` ）を指定してください。
+以下のいずれかの方法で指定できます。
 
-```python
-# 指定例
-llm = LLM("meta-llama/Meta-Llama-3-8B-Instruct", "YOUR_ACCESS_TOKEN")
-
-# またはキーワードパラメーターで指定
-llm = LLM(model_name="meta-llama/Meta-Llama-3-8B-Instruct", access_token="YOUR_ACCESS_TOKEN")
+```bash
+(llm-chat) $ python llm-chat.py --model-name meta-llama/Meta-Llama-3-8B-Instruct --access-token YOUR_ACCESS_TOKEN
+(llm-chat) $ python llm-chat.py -m meta-llama/Meta-Llama-3-8B-Instruct -t YOUR_ACCESS_TOKEN
 ```
 
 アクセストークンは、以下の手順で作成してください。
