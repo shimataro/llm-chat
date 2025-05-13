@@ -75,10 +75,10 @@ See you!
 
 |オプション|意味|規定値|備考|
 |---|---|---|---|
-|`--model-name`, `-m`|使用するモデル名|`elyza/ELYZA-japanese-Llama-2-7b-instruct`|[Hugging Face](https://huggingface.co/)の中から選択|
+|`--model-name`, `-m`|使用するモデル名|[`elyza/ELYZA-japanese-Llama-2-7b-instruct`](https://huggingface.co/elyza/ELYZA-japanese-Llama-2-7b-instruct)|[Hugging Face](https://huggingface.co/)の中から選択|
 |`--access-token`, `-t`|Hugging Faceのアクセストークン|なし||
-|`--lang-src`|入力言語のコード|指定なし|[言語コード一覧](https://github.com/facebookresearch/flores/blob/main/flores200/README.md#languages-in-flores-200) / "Text2Text Generation" または "Translation" タスクのモデルで有効|
-|`--lang-tgt`|出力言語のコード|指定なし|[言語コード一覧](https://github.com/facebookresearch/flores/blob/main/flores200/README.md#languages-in-flores-200) / "Text2Text Generation" または "Translation" タスクのモデルで有効|
+|`--lang-src`|入力言語のコード|指定なし|[言語コード一覧](https://github.com/facebookresearch/flores/blob/main/flores200/README.md#languages-in-flores-200) / [Text2Text Generation](https://huggingface.co/models?pipeline_tag=text2text-generation&sort=trending)または[Translation](https://huggingface.co/models?pipeline_tag=translation&sort=trending)タスクで有効|
+|`--lang-tgt`|出力言語のコード|指定なし|[言語コード一覧](https://github.com/facebookresearch/flores/blob/main/flores200/README.md#languages-in-flores-200) / [Text2Text Generation](https://huggingface.co/models?pipeline_tag=text2text-generation&sort=trending)または[Translation](https://huggingface.co/models?pipeline_tag=translation&sort=trending)タスクで有効|
 
 コマンドラインから指定する場合
 
@@ -111,7 +111,7 @@ llm.print_inference_result(input_text, max_new_tokens=256)
 
 ### 他のモデルを使いたい
 
-デフォルトのモデル（ `elyza/ELYZA-japanese-Llama-2-7b-instruct` ）以外を使う場合は、チャット起動時に、コマンドライン引数 `--model-name` （または `-m` ）を指定してください。
+デフォルトのモデル（[`elyza/ELYZA-japanese-Llama-2-7b-instruct`](https://huggingface.co/elyza/ELYZA-japanese-Llama-2-7b-instruct)）以外を使う場合は、起動時にコマンドライン引数 `--model-name` （または `-m` ）を指定してください。
 
 ```bash
 # "--model-name" でモデルを指定
@@ -181,34 +181,34 @@ main(["-m", "meta-llama/Meta-Llama-3-8B-Instruct", "-t", "YOUR_ACCESS_TOKEN"])
 
 ### 入力/出力の言語を明示的に指定できる？
 
-`--language-src` で入力の言語コードを、 `--language-tgt` で出力の言語コードを指定できます。
+`--lang-src` で入力の言語コードを、 `--lang-tgt` で出力の言語コードを指定できます。
 言語コードの一覧は[こちら](https://github.com/facebookresearch/flores/blob/main/flores200/README.md#languages-in-flores-200)をご参照ください。
 
-特に `facebook/nllb-200-distilled-600M` のような翻訳に特化したモデルでは、出力の言語コードを指定しないと想定外の言語で出力される場合があります。
+特に[`facebook/nllb-200-distilled-600M`](https://huggingface.co/facebook/nllb-200-distilled-600M)のような翻訳に特化したモデルでは、出力の言語コードを指定しないと想定外の言語で出力される場合があります。
 
 ```bash
-# "--access-token" でアクセストークンを指定
-$ pipenv run llm-chat --model-name facebook/nllb-200-distilled-600M --language-src eng_Latn --language-tgt jpn_Jpan
+# "--lang-src" / "--lang-tgt" で入出力言語コードを指定
+$ pipenv run llm-chat --model-name facebook/nllb-200-distilled-600M --lang-src eng_Latn --lang-tgt jpn_Jpan
 ```
 
 ```python
 # JupyterLab (Notebook)で動かす場合
-main(["-m", "facebook/nllb-200-distilled-600M", "--language-src", "eng_Latn", "--language-tgt", "jpn_Jpan"])
+main(["-m", "facebook/nllb-200-distilled-600M", "--lang-src", "eng_Latn", "--lang-tgt", "jpn_Jpan"])
 ```
 
-これらオプションは、 "Text2Text Generation" または "Translation" タスクのモデルでのみ有効です。
-"Text Generation" タスクのモデルで指定しても無視されます。
+これらオプションは、[Text2Text Generation](https://huggingface.co/models?pipeline_tag=text2text-generation&sort=trending)または[Translation](https://huggingface.co/models?pipeline_tag=translation&sort=trending)タスクでのみ有効です。
+[Text Generation](https://huggingface.co/models?pipeline_tag=text-generation&sort=trending)タスクで指定しても無視されます。
 
 ### モデルによって応答がおかしい / エラーが起きる
 
 ハルシネーション的な意味での「おかしい」であれば、まあそういうものだと思ってください。
 
-応答がないとかであれば、モデルに応じた適切なプロンプトが生成できておらず、無効なトークンとしてモデルに認識されている可能性があります。
+応答がないとかであれば、[Text Generation](https://huggingface.co/models?pipeline_tag=text-generation&sort=trending)タスクでモデルに応じた適切なプロンプトが生成できておらず、無効なトークンとしてモデルに認識されている可能性があります。
 [libs/llm.py](./libs/llm.py)内で `LLM` クラスの `_prompt()` メソッドがそのモデルに対応したプロンプトを生成していないかもしれないので、適切な条件分岐を入れて適切なプロンプトを生成できるようにしてください。
 あとPRください。
 
-あるいは、日本語非対応のモデルに日本語を入力した場合も応答がおかしくなる（応答がない、も含む）場合があります。
+あるいは、日本語非対応のモデルで日本語を使用した場合も応答がおかしくなる（応答がない、も含む）場合があります。
 
 エラーが起きる場合は、モデル固有の設定を吸収しきれていない可能性があります。
-モデル固有の設定を調整してください。
+その場合は固有の設定を調整してください。
 あとPRください。
