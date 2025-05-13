@@ -172,7 +172,7 @@ $ pipenv run llm-chat --model-name facebook/nllb-200-distilled-600M --language-s
 ```
 
 ```python
-# JupyterLab (Notebook)で動かす場合は
+# JupyterLab (Notebook)で動かす場合
 main(["-m", "facebook/nllb-200-distilled-600M", "--language-src", "eng_Latn", "--language-tgt", "jpn_Jpan"])
 ```
 
