@@ -2,18 +2,30 @@
 
 いろんなLLMでチャット！
 
-## 動かし方
+## 準備
 
-```bash
-$ pipenv shell
-(llm-chat) $ pipenv sync
-(llm-chat) $ python llm-chat.py
+`pipenv` が必要です。
+
+```text
+$ pipenv sync
+Creating a virtualenv for this project
+...
+✔ Successfully created virtual environment!
+Virtualenv location: XXX
+To activate this project's virtualenv, run pipenv shell.
+Alternatively, run a command inside the virtualenv with pipenv run.
+Installing dependencies from Pipfile.lock (XXX)...
+All dependencies are now up-to-date!
 ```
 
+## 起動方法
+
+`pipenv run llm-chat` で起動できます。
 必要なモデル等がロードされた後 `>` が表示されるので、何か話しかけてください。
 出力にプロンプトが表示されることがありますが、とりあえず気にしないでください。生成されたプロンプトの確認のためにあえて残しています。
 
 ```text
+$ pipenv run llm-chat
 Model Name: elyza/ELYZA-japanese-Llama-2-7b-instruct
 Access Token: None
 
@@ -49,7 +61,6 @@ USJは、大人か
 
 > exit
 See you!
-(llm-chat) $
 ```
 
 ## JupyterLab (Notebook) 上での動かし方
@@ -77,8 +88,10 @@ llm.print_inference_result(input_text, max_new_tokens=256)
 チャット起動時に、コマンドライン引数 `--model-name` （または `-m` ）を指定してください。
 
 ```bash
-(llm-chat) $ python llm-chat.py --model-name microsoft/phi-2
-(llm-chat) $ python llm-chat.py -m microsoft/phi-2
+# "--model-name" でモデルを指定
+$ pipenv run llm-chat --model-name microsoft/phi-2
+# "-m" でも可
+$ pipenv run llm-chat -m microsoft/phi-2
 ```
 
 デフォルトでは `elyza/ELYZA-japanese-Llama-2-7b-instruct` を使っています。
@@ -93,11 +106,13 @@ llm.print_inference_result(input_text, max_new_tokens=256)
 
 ### 認証やログインが必要なモデルを使いたい
 
-チャット起動時に、コマンドライン引数 `--access-token` （または `-t` ）を指定してください。
+チャット起動時に、コマンドライン引数 `--access-token` （または `-t` ）でアクセストークンを指定してください。
 
 ```bash
-(llm-chat) $ python llm-chat.py --model-name meta-llama/Meta-Llama-3-8B-Instruct --access-token YOUR_ACCESS_TOKEN
-(llm-chat) $ python llm-chat.py -m meta-llama/Meta-Llama-3-8B-Instruct -t YOUR_ACCESS_TOKEN
+# "--access-token" でアクセストークンを指定
+$ pipenv run llm-chat --model-name meta-llama/Meta-Llama-3-8B-Instruct --access-token YOUR_ACCESS_TOKEN
+# "-t" でも可
+$ pipenv run llm-chat -m meta-llama/Meta-Llama-3-8B-Instruct -t YOUR_ACCESS_TOKEN
 ```
 
 アクセストークンは、以下の手順で作成してください。

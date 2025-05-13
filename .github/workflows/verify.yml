@@ -1,6 +1,6 @@
 # https://help.github.com/en/articles/workflow-syntax-for-github-actions
 
-name: Lint
+name: Verify
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
     - "**"
 
 jobs:
-  verify:
+  lint:
     name: Lint
     runs-on: ubuntu-latest
     steps:
