@@ -75,10 +75,10 @@ See you!
 
 |オプション|意味|規定値|備考|
 |---|---|---|---|
-|`--model-name`, `-m`|使用するモデル名|[`elyza/ELYZA-japanese-Llama-2-7b-instruct`](https://huggingface.co/elyza/ELYZA-japanese-Llama-2-7b-instruct)|[Hugging Face](https://huggingface.co/)の中から選択|
+|`--model-name`, `-m`|使用するモデル名|[`elyza/ELYZA-japanese-Llama-2-7b-instruct`](https://huggingface.co/elyza/ELYZA-japanese-Llama-2-7b-instruct)|[Hugging Face](https://huggingface.co/models)の中から選択|
 |`--access-token`, `-t`|Hugging Faceのアクセストークン|なし||
-|`--lang-src`|入力言語のコード|指定なし|[言語コード一覧](https://github.com/facebookresearch/flores/blob/main/flores200/README.md#languages-in-flores-200) / [Text2Text Generation](https://huggingface.co/models?pipeline_tag=text2text-generation&sort=trending)または[Translation](https://huggingface.co/models?pipeline_tag=translation&sort=trending)タスクで有効|
-|`--lang-tgt`|出力言語のコード|指定なし|[言語コード一覧](https://github.com/facebookresearch/flores/blob/main/flores200/README.md#languages-in-flores-200) / [Text2Text Generation](https://huggingface.co/models?pipeline_tag=text2text-generation&sort=trending)または[Translation](https://huggingface.co/models?pipeline_tag=translation&sort=trending)タスクで有効|
+|`--lang-src`|入力の[言語コード](https://github.com/facebookresearch/flores/blob/main/flores200/README.md#languages-in-flores-200)|指定なし|[Text2Text Generation](https://huggingface.co/models?pipeline_tag=text2text-generation&sort=trending)または[Translation](https://huggingface.co/models?pipeline_tag=translation&sort=trending)タスクで有効|
+|`--lang-tgt`|出力の[言語コード](https://github.com/facebookresearch/flores/blob/main/flores200/README.md#languages-in-flores-200)|指定なし|[Text2Text Generation](https://huggingface.co/models?pipeline_tag=text2text-generation&sort=trending)または[Translation](https://huggingface.co/models?pipeline_tag=translation&sort=trending)タスクで有効|
 
 コマンドラインから指定する場合
 
@@ -94,6 +94,8 @@ JupyterLab (Notebook)で動かす場合は、最後のセルの `main()` の呼�
 ```python
 main(["-m", "microsoft/phi-2"])
 ```
+
+実際の用途は、下のQ&Aを参照してください。
 
 ## Q&A
 
