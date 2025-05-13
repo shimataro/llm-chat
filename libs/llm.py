@@ -171,7 +171,9 @@ class LLM:
         return input_text
 
 
-def _model_class(model_name: str) -> type[AutoModelForCausalLM | AutoModelForSeq2SeqLM]:
+def _model_class(model_name: str) -> type[
+    AutoModelForCausalLM | AutoModelForSeq2SeqLM
+]:
     """ モデル名から適切なモデルのクラスを取得
 
     :param model_name: モデル名
