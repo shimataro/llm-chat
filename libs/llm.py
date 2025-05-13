@@ -1,10 +1,12 @@
 # LLMクラス
 import threading
-from typing import Generator, Optional
+from typing import Any, Generator, Optional
 
 import torch
+from transformers.models.auto.configuration_auto import AutoConfig
 from transformers.models.auto.tokenization_auto import AutoTokenizer
 from transformers.models.auto.modeling_auto import AutoModelForCausalLM
+from transformers.models.auto.modeling_auto import AutoModelForSeq2SeqLM
 from transformers.generation.streamers import TextIteratorStreamer
 
 
@@ -17,16 +19,12 @@ class LLM:
         """ LLMの初期化
 
         :param model_name: モデル名
+        :param access_token: Hugging Faceのアクセストークン
         """
         self._model_name = model_name
 
-        # トークナイザーとモデルを読み込み
-        self._model = AutoModelForCausalLM.from_pretrained(
-            model_name,
-            device_map="auto",
-            torch_dtype=_dtype(),
-            token=access_token,
-        )
+        # モデルとトークナイザーを読み込み
+        self._model = _load_model(model_name, access_token)
         self._tokenizer = AutoTokenizer.from_pretrained(
             model_name,
             use_fast=True,
@@ -118,6 +116,10 @@ class LLM:
         :return: プロンプト
         """
 
+        # seq2seqはプロンプト用の加工不要
+        if isinstance(self._model, AutoModelForSeq2SeqLM):
+            return input_text
+
         # chat_template に対応していれば使う（Mistral, Gemmaなど）
         if hasattr(self._tokenizer, "chat_template"):
             try:
@@ -161,6 +163,30 @@ class LLM:
 
         # デフォルト（そのまま）
         return input_text
+
+
+def _load_model(model_name: str, access_token: Optional[str]) -> Any:
+    """ モデルを読み込む
+
+    :param model_name: モデル名
+    :param access_token: Hugging Faceのアクセストークン
+    :return: モデル
+    """
+    config = AutoConfig.from_pretrained(model_name)
+    if hasattr(config, "is_encoder_decoder") and config.is_encoder_decoder:
+        return AutoModelForSeq2SeqLM.from_pretrained(
+            model_name,
+            device_map="auto",
+            torch_dtype=_dtype(),
+            token=access_token,
+        )
+    else:
+        return AutoModelForCausalLM.from_pretrained(
+            model_name,
+            device_map="auto",
+            torch_dtype=_dtype(),
+            token=access_token,
+        )
 
 
 def _dtype() -> torch.dtype | str:
