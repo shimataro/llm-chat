@@ -4,7 +4,7 @@
 
 ## 準備
 
-`pipenv` が必要です。
+[pipenv](https://pipenv.pypa.io/en/latest/)が必要です。
 
 ```text
 $ pipenv sync
@@ -67,7 +67,7 @@ See you!
 
 ## JupyterLab (Notebook) 上での動かし方
 
-[llm-chat.ipynb](./llm-chat.ipynb)をJupyterLab (Notebook)で開き、⏩ボタンをクリックして全てのセルを実行してください。
+[`llm-chat.ipynb`](./llm-chat.ipynb)をJupyterLab (Notebook)で開き、⏩ボタンをクリックして全てのセルを実行してください。
 
 依存パッケージやモデルファイルなどのダウンロードが終わった後、チャットができるようになります。
 
@@ -101,7 +101,7 @@ main(["-m", "microsoft/phi-2"])
 
 ### 長い応答が途中で切れる
 
-[llm-chat.py](./llm-chat.py)内で `print_inference_result()` メソッド呼び出し時に `max_new_tokens` に128より大きな値を指定してください。
+[`llm-chat.py`](./llm-chat.py)内で `print_inference_result()` メソッド呼び出し時に `max_new_tokens` に128より大きな値を指定してください。
 
 ```python
 # 指定例
@@ -175,7 +175,7 @@ main(["-m", "meta-llama/Meta-Llama-3-8B-Instruct", "-t", "YOUR_ACCESS_TOKEN"])
 
 1. [Hugging Face](https://huggingface.co/)にサインアップ＆ログイン
 1. [アクセストークン](https://huggingface.co/settings/tokens)のページから[トークンを作成](https://huggingface.co/settings/tokens/new?tokenType=read)
-    * "Token type" は "READ" でOK
+    * "Token type" に "READ" を指定
     * 名前は自分でわかりやすいものを指定（ `LLM Chat` など）
 1. 生成された `hf_` で始まる文字列がアクセストークン
 
@@ -206,7 +206,7 @@ main(["-m", "facebook/nllb-200-distilled-600M", "--lang-src", "eng_Latn", "--lan
 ハルシネーション的な意味での「おかしい」であれば、まあそういうものだと思ってください。
 
 応答がないとかであれば、[Text Generation](https://huggingface.co/models?pipeline_tag=text-generation&sort=trending)タスクでモデルに応じた適切なプロンプトが生成できておらず、無効なトークンとしてモデルに認識されている可能性があります。
-[libs/llm.py](./libs/llm.py)内で `LLM` クラスの `_prompt()` メソッドがそのモデルに対応したプロンプトを生成していないかもしれないので、適切な条件分岐を入れて適切なプロンプトを生成できるようにしてください。
+[`libs/llm.py`](./libs/llm.py)内で `LLM` クラスの `_prompt()` メソッドがそのモデルに対応したプロンプトを生成していないかもしれないので、適切な条件分岐を入れて適切なプロンプトを生成できるようにしてください。
 あとPRください。
 
 あるいは、日本語非対応のモデルで日本語を使用した場合も応答がおかしくなる（応答がない、も含む）場合があります。
