@@ -77,8 +77,8 @@ See you!
 |---|---|---|---|
 |`--model-name`, `-m`|使用するモデル名|`elyza/ELYZA-japanese-Llama-2-7b-instruct`|[Hugging Face](https://huggingface.co/)の中から選択|
 |`--access-token`, `-t`|Hugging Faceのアクセストークン|なし||
-|`--lang-src`|入力言語のコード|指定なし|[言語コード一覧](https://github.com/facebookresearch/flores/blob/main/flores200/README.md#languages-in-flores-200) / "Text2Text Generation" または "Translation" タグがついているモデルで有効|
-|`--lang-tgt`|出力言語のコード|指定なし|[言語コード一覧](https://github.com/facebookresearch/flores/blob/main/flores200/README.md#languages-in-flores-200) / "Text2Text Generation" または "Translation" タグがついているモデルで有効|
+|`--lang-src`|入力言語のコード|指定なし|[言語コード一覧](https://github.com/facebookresearch/flores/blob/main/flores200/README.md#languages-in-flores-200) / "Text2Text Generation" または "Translation" タスクのモデルで有効|
+|`--lang-tgt`|出力言語のコード|指定なし|[言語コード一覧](https://github.com/facebookresearch/flores/blob/main/flores200/README.md#languages-in-flores-200) / "Text2Text Generation" または "Translation" タスクのモデルで有効|
 
 コマンドラインから指定する場合
 
@@ -127,11 +127,31 @@ main(["-m", "microsoft/phi-2"])
 
 ### どうやってモデルを探せばいいの？
 
-[モデル一覧ページ](https://huggingface.co/models)の "Natural Language Processing" から興味のあるタグを選んでください。
+[モデル一覧ページ](https://huggingface.co/models)の "Natural Language Processing" から興味のあるタスクを選んでください。
 
 * [Text Generation](https://huggingface.co/models?pipeline_tag=text-generation&sort=trending)
 * [Text2Text Generation](https://huggingface.co/models?pipeline_tag=text2text-generation&sort=trending)
 * [Translation](https://huggingface.co/models?pipeline_tag=translation&sort=trending)
+
+### 動作確認したモデルはある？
+
+2025/05/13時点で動作確認したモデルは以下のとおりです。
+「入力に対して、特にエラーが出ず何かしらの出力が得られた」程度の確認であり、出力の精度などは検証していません。
+
+|モデル名|タスク|日本語対応|アクセストークン|
+|---|---|---|---|
+|[`cyberagent/open-calm-7b`](https://huggingface.co/cyberagent/open-calm-7b)|Text Generation|○|不要|
+|[`elyza/ELYZA-japanese-Llama-2-7b-instruct`](https://huggingface.co/elyza/ELYZA-japanese-Llama-2-7b-instruct)|Text Generation|○|不要|
+|[`facebook/nllb-200-distilled-600M`](https://huggingface.co/facebook/nllb-200-distilled-600M)|Translation|○|不要|
+|[`google-t5/t5-small`](https://huggingface.co/google-t5/t5-small)|Translation|×|不要|
+|[`google/flan-t5-base`](https://huggingface.co/google/flan-t5-base)|Text2Text Generation|×|不要|
+|[`google/gemma-7b-it`](https://huggingface.co/google/gemma-7b-it)|Text Generation|△|要|
+|[`meta-llama/Meta-Llama-3-8B-Instruct`](https://huggingface.co/meta-llama/Meta-Llama-3-8B-Instruct)|Text Generation|△|要|
+|[`microsoft/phi-2`](https://huggingface.co/microsoft/phi-2)|Text Generation|×|不要|
+|[`rinna/youri-7b-chat`](https://huggingface.co/rinna/youri-7b-chat)|Text Generation|○|不要|
+
+動作確認できたモデルがあったらこの表に載せるので教えてください。
+あるいは修正PRください。
 
 ### 認証やログインが必要なモデルを使いたい
 
@@ -178,26 +198,6 @@ main(["-m", "facebook/nllb-200-distilled-600M", "--language-src", "eng_Latn", "-
 
 これらオプションは、 "Text2Text Generation" または "Translation" のモデルでのみ有効です。
 "Text Generation" のモデルで指定しても無視されます。
-
-### 動作確認したモデルはある？
-
-2025/05/13時点で動作確認したモデルは以下のとおりです。
-「入力に対して、特にエラーが出ず何かしらの出力が得られた」程度の確認であり、出力の精度などは検証していません。
-
-|モデル名|ジャンル|日本語対応|アクセストークン|
-|---|---|---|---|
-|[`cyberagent/open-calm-7b`](https://huggingface.co/cyberagent/open-calm-7b)|Text Generation|○|不要|
-|[`elyza/ELYZA-japanese-Llama-2-7b-instruct`](https://huggingface.co/elyza/ELYZA-japanese-Llama-2-7b-instruct)|Text Generation|○|不要|
-|[`facebook/nllb-200-distilled-600M`](https://huggingface.co/facebook/nllb-200-distilled-600M)|Translation|○|不要|
-|[`google-t5/t5-small`](https://huggingface.co/google-t5/t5-small)|Translation|×|不要|
-|[`google/flan-t5-base`](https://huggingface.co/google/flan-t5-base)|Text2Text Generation|×|不要|
-|[`google/gemma-7b-it`](https://huggingface.co/google/gemma-7b-it)|Text Generation|△|要|
-|[`meta-llama/Meta-Llama-3-8B-Instruct`](https://huggingface.co/meta-llama/Meta-Llama-3-8B-Instruct)|Text Generation|△|要|
-|[`microsoft/phi-2`](https://huggingface.co/microsoft/phi-2)|Text Generation|×|不要|
-|[`rinna/youri-7b-chat`](https://huggingface.co/rinna/youri-7b-chat)|Text Generation|○|不要|
-
-動作確認できたモデルがあったらこの表に載せるので教えてください。
-あるいは修正PRください。
 
 ### モデルによって応答がおかしい / エラーが起きる
 
