@@ -6,7 +6,7 @@
 
 `pipenv` が必要です。
 
-```bash
+```text
 $ pipenv sync
 Creating a virtualenv for this project
 ...
@@ -24,7 +24,7 @@ All dependencies are now up-to-date!
 必要なモデル等がロードされた後 `>` が表示されるので、何か話しかけてください。
 出力にプロンプトが表示されることがありますが、とりあえず気にしないでください。生成されたプロンプトの確認のためにあえて残しています。
 
-```bash
+```text
 $ pipenv run llm-chat
 Model Name: elyza/ELYZA-japanese-Llama-2-7b-instruct
 Access Token: None
