@@ -196,8 +196,8 @@ $ pipenv run llm-chat --model-name facebook/nllb-200-distilled-600M --language-s
 main(["-m", "facebook/nllb-200-distilled-600M", "--language-src", "eng_Latn", "--language-tgt", "jpn_Jpan"])
 ```
 
-これらオプションは、 "Text2Text Generation" または "Translation" のモデルでのみ有効です。
-"Text Generation" のモデルで指定しても無視されます。
+これらオプションは、 "Text2Text Generation" または "Translation" タスクのモデルでのみ有効です。
+"Text Generation" タスクのモデルで指定しても無視されます。
 
 ### モデルによって応答がおかしい / エラーが起きる
 
