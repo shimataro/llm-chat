@@ -71,6 +71,30 @@ See you!
 
 依存パッケージやモデルファイルなどのダウンロードが終わった後、チャットができるようになります。
 
+## オプション一覧
+
+|オプション|意味|規定値|備考|
+|---|---|---|---|
+|`--model-name`, `-m`|使用するモデル名|`elyza/ELYZA-japanese-Llama-2-7b-instruct`|[Hugging Face](https://huggingface.co/)の中から選択|
+|`--access-token`, `-t`|Hugging Faceのアクセストークン|なし||
+|`--lang-src`|入力言語のコード|指定なし|[言語コード一覧](https://github.com/facebookresearch/flores/blob/main/flores200/README.md#languages-in-flores-200) / "Text2Text Generation" または "Translation" タグがついているモデルで有効|
+|`--lang-tgt`|出力言語のコード|指定なし|[言語コード一覧](https://github.com/facebookresearch/flores/blob/main/flores200/README.md#languages-in-flores-200) / "Text2Text Generation" または "Translation" タグがついているモデルで有効|
+
+コマンドラインから指定する場合
+
+```bash
+# "--model-name" でモデルを指定
+$ pipenv run llm-chat --model-name microsoft/phi-2
+# "-m" でも可
+$ pipenv run llm-chat -m microsoft/phi-2
+```
+
+JupyterLab (Notebook)で動かす場合は、最後のセルの `main()` の呼び出し時に配列で指定してください。
+
+```python
+main(["-m", "microsoft/phi-2"])
+```
+
 ## Q&A
 
 ### 長い応答が途中で切れる
@@ -85,11 +109,9 @@ llm.print_inference_result(input_text, max_new_tokens=256)
 `max_new_tokens` は、生成されるトークン数の上限です。
 デフォルトでは128なので、もっと大きな値にするとより長い応答を得られます。
 
-### 他のモデルも使いたい
+### 他のモデルを使いたい
 
-デフォルトでは `elyza/ELYZA-japanese-Llama-2-7b-instruct` を使っています。
-
-別のモデルを使う場合は、チャット起動時に、コマンドライン引数 `--model-name` （または `-m` ）を指定してください。
+デフォルトのモデル（ `elyza/ELYZA-japanese-Llama-2-7b-instruct` ）以外を使う場合は、チャット起動時に、コマンドライン引数 `--model-name` （または `-m` ）を指定してください。
 
 ```bash
 # "--model-name" でモデルを指定
@@ -98,9 +120,8 @@ $ pipenv run llm-chat --model-name microsoft/phi-2
 $ pipenv run llm-chat -m microsoft/phi-2
 ```
 
-JupyterLab (Notebook)で動かす場合は、最後のセルの `main()` の呼び出し時に配列で指定してください。
-
 ```python
+# JupyterLab (Notebook)で動かす場合
 main(["-m", "microsoft/phi-2"])
 ```
 
@@ -123,9 +144,8 @@ $ pipenv run llm-chat --model-name meta-llama/Meta-Llama-3-8B-Instruct --access-
 $ pipenv run llm-chat -m meta-llama/Meta-Llama-3-8B-Instruct -t YOUR_ACCESS_TOKEN
 ```
 
-JupyterLab (Notebook)で動かす場合は、最後のセルの `main()` の呼び出し時に配列で指定してください。
-
 ```python
+# JupyterLab (Notebook)で動かす場合
 main(["-m", "meta-llama/Meta-Llama-3-8B-Instruct", "-t", "YOUR_ACCESS_TOKEN"])
 ```
 
@@ -151,9 +171,8 @@ main(["-m", "meta-llama/Meta-Llama-3-8B-Instruct", "-t", "YOUR_ACCESS_TOKEN"])
 $ pipenv run llm-chat --model-name facebook/nllb-200-distilled-600M --language-src eng_Latn --language-tgt jpn_Jpan
 ```
 
-JupyterLab (Notebook)で動かす場合は、最後のセルの `main()` の呼び出し時に配列で指定してください。
-
 ```python
+# JupyterLab (Notebook)で動かす場合は
 main(["-m", "facebook/nllb-200-distilled-600M", "--language-src", "eng_Latn", "--language-tgt", "jpn_Jpan"])
 ```
 
