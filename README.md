@@ -85,7 +85,9 @@ llm.print_inference_result(input_text, max_new_tokens=256)
 
 ### 他のモデルも使いたい
 
-チャット起動時に、コマンドライン引数 `--model-name` （または `-m` ）を指定してください。
+デフォルトでは `elyza/ELYZA-japanese-Llama-2-7b-instruct` を使っています。
+
+別のモデルを使う場合は、チャット起動時に、コマンドライン引数 `--model-name` （または `-m` ）を指定してください。
 
 ```bash
 # "--model-name" でモデルを指定
@@ -94,7 +96,11 @@ $ pipenv run llm-chat --model-name microsoft/phi-2
 $ pipenv run llm-chat -m microsoft/phi-2
 ```
 
-デフォルトでは `elyza/ELYZA-japanese-Llama-2-7b-instruct` を使っています。
+JupyterLab (Notebook)で動かす場合は、最後のセルの `main()` の呼び出し時に配列で指定してください。
+
+```python
+main(["-m", "microsoft/phi-2"])
+```
 
 ### どうやってモデルを探せばいいの？
 
@@ -115,6 +121,12 @@ $ pipenv run llm-chat --model-name meta-llama/Meta-Llama-3-8B-Instruct --access-
 $ pipenv run llm-chat -m meta-llama/Meta-Llama-3-8B-Instruct -t YOUR_ACCESS_TOKEN
 ```
 
+JupyterLab (Notebook)で動かす場合は、最後のセルの `main()` の呼び出し時に配列で指定してください。
+
+```python
+main(["-m", "meta-llama/Meta-Llama-3-8B-Instruct", "-t", "YOUR_ACCESS_TOKEN"])
+```
+
 アクセストークンは、以下の手順で作成してください。
 
 1. [Hugging Face](https://huggingface.co/)にサインアップ＆ログイン
@@ -128,11 +140,14 @@ $ pipenv run llm-chat -m meta-llama/Meta-Llama-3-8B-Instruct -t YOUR_ACCESS_TOKE
 ### 動作確認したモデルはある？
 
 2025/05/13時点で動作確認したモデルは以下のとおりです。
+「入力に対して、特にエラーが出ず何かしらの出力が得られた」程度の確認であり、出力の精度などは検証していません。
 
 |モデル名|ジャンル|日本語対応|アクセストークン|
 |---|---|---|---|
 |[`cyberagent/open-calm-7b`](https://huggingface.co/cyberagent/open-calm-7b)|Text Generation|○|不要|
 |[`elyza/ELYZA-japanese-Llama-2-7b-instruct`](https://huggingface.co/elyza/ELYZA-japanese-Llama-2-7b-instruct)|Text Generation|○|不要|
+|[`google-t5/t5-small`](https://huggingface.co/google-t5/t5-small)|Translation|×|不要|
+|[`google/flan-t5-base`](https://huggingface.co/google/flan-t5-base)|Text2Text Generation|×|不要|
 |[`google/gemma-7b-it`](https://huggingface.co/google/gemma-7b-it)|Text Generation|△|要|
 |[`meta-llama/Meta-Llama-3-8B-Instruct`](https://huggingface.co/meta-llama/Meta-Llama-3-8B-Instruct)|Text Generation|△|要|
 |[`microsoft/phi-2`](https://huggingface.co/microsoft/phi-2)|Text Generation|×|不要|
@@ -148,6 +163,8 @@ $ pipenv run llm-chat -m meta-llama/Meta-Llama-3-8B-Instruct -t YOUR_ACCESS_TOKE
 応答がないとかであれば、モデルに応じた適切なプロンプトが生成できておらず、無効なトークンとしてモデルに認識されている可能性があります。
 [libs/llm.py](./libs/llm.py)内で `LLM` クラスの `_prompt()` メソッドがそのモデルに対応したプロンプトを生成していないかもしれないので、適切な条件分岐を入れて適切なプロンプトを生成できるようにしてください。
 あとPRください。
+
+あるいは、日本語非対応のモデルに日本語を入力した場合も応答がおかしくなる（応答がない、も含む）場合があります。
 
 エラーが起きる場合は、モデル固有の設定を吸収しきれていない可能性があります。
 モデル固有の設定を調整してください。
