@@ -1,6 +1,6 @@
 # LLMクラス
 import threading
-from typing import Any, Generator, Optional
+from typing import Generator, Optional
 
 import torch
 from transformers.models.auto.configuration_auto import AutoConfig
@@ -24,7 +24,13 @@ class LLM:
         self._model_name = model_name
 
         # モデルとトークナイザーを読み込み
-        self._model = _load_model(model_name, access_token)
+        ModelClass = _model_class(model_name)
+        self._model = ModelClass.from_pretrained(
+            model_name,
+            device_map="auto",
+            torch_dtype=_dtype(),
+            token=access_token,
+        )
         self._tokenizer = AutoTokenizer.from_pretrained(
             model_name,
             use_fast=True,
@@ -165,28 +171,17 @@ class LLM:
         return input_text
 
 
-def _load_model(model_name: str, access_token: Optional[str]) -> Any:
-    """ モデルを読み込む
+def _model_class(model_name: str) -> type[AutoModelForCausalLM | AutoModelForSeq2SeqLM]:
+    """ モデル名から適切なモデルのクラスを取得
 
     :param model_name: モデル名
-    :param access_token: Hugging Faceのアクセストークン
-    :return: モデル
+    :return: モデルクラス
     """
     config = AutoConfig.from_pretrained(model_name)
     if hasattr(config, "is_encoder_decoder") and config.is_encoder_decoder:
-        return AutoModelForSeq2SeqLM.from_pretrained(
-            model_name,
-            device_map="auto",
-            torch_dtype=_dtype(),
-            token=access_token,
-        )
+        return AutoModelForSeq2SeqLM
     else:
-        return AutoModelForCausalLM.from_pretrained(
-            model_name,
-            device_map="auto",
-            torch_dtype=_dtype(),
-            token=access_token,
-        )
+        return AutoModelForCausalLM
 
 
 def _dtype() -> torch.dtype | str:
