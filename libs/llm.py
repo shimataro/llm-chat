@@ -3,8 +3,10 @@ import threading
 from typing import Generator, Optional
 
 import torch
+from transformers.models.auto.configuration_auto import AutoConfig
 from transformers.models.auto.tokenization_auto import AutoTokenizer
 from transformers.models.auto.modeling_auto import AutoModelForCausalLM
+from transformers.models.auto.modeling_auto import AutoModelForSeq2SeqLM
 from transformers.generation.streamers import TextIteratorStreamer
 
 
@@ -17,11 +19,13 @@ class LLM:
         """ LLMの初期化
 
         :param model_name: モデル名
+        :param access_token: Hugging Faceのアクセストークン
         """
         self._model_name = model_name
 
-        # トークナイザーとモデルを読み込み
-        self._model = AutoModelForCausalLM.from_pretrained(
+        # モデルとトークナイザーを読み込み
+        ModelClass = _model_class(model_name)
+        self._model = ModelClass.from_pretrained(
             model_name,
             device_map="auto",
             torch_dtype=_dtype(),
@@ -118,6 +122,10 @@ class LLM:
         :return: プロンプト
         """
 
+        # seq2seqはプロンプト用の加工不要
+        if isinstance(self._model, AutoModelForSeq2SeqLM):
+            return input_text
+
         # chat_template に対応していれば使う（Mistral, Gemmaなど）
         if hasattr(self._tokenizer, "chat_template"):
             try:
@@ -161,6 +169,21 @@ class LLM:
 
         # デフォルト（そのまま）
         return input_text
+
+
+def _model_class(model_name: str) -> type[
+    AutoModelForCausalLM | AutoModelForSeq2SeqLM
+]:
+    """ モデル名から適切なモデルのクラスを取得
+
+    :param model_name: モデル名
+    :return: モデルクラス
+    """
+    config = AutoConfig.from_pretrained(model_name)
+    if hasattr(config, "is_encoder_decoder") and config.is_encoder_decoder:
+        return AutoModelForSeq2SeqLM
+    else:
+        return AutoModelForCausalLM
 
 
 def _dtype() -> torch.dtype | str:
