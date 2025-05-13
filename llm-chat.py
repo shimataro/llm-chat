@@ -11,6 +11,8 @@ class Parameters:
     """ アプリケーションパラメーター """
     model_name: str
     access_token: Optional[str]
+    lang_src: Optional[str]
+    lang_tgt: Optional[str]
 
 
 def parse_args(args: Optional[list[str]]) -> Parameters:
@@ -28,6 +30,14 @@ def parse_args(args: Optional[list[str]]) -> Parameters:
         "--access-token", "-t",
         help="Hugging Faceのアクセストークン",
     )
+    parser.add_argument(
+        "--lang-src",
+        help="入力言語のコード（Text Generation では無効）",
+    )
+    parser.add_argument(
+        "--lang-tgt",
+        help="出力言語のコード（Text Generation では無効）",
+    )
 
     # 引数を解析＆Parametersクラスに変換
     ns = parser.parse_args(args=args)
@@ -44,10 +54,17 @@ def main(argv: Optional[list[str]] = None) -> None:
     params = parse_args(argv)
     print(f"Model Name: {params.model_name}")
     print(f"Access Token: {params.access_token}")
+    print(f"Source Language: {params.lang_src}")
+    print(f"Target Language: {params.lang_tgt}")
     print()
 
     # モデルの初期化
-    llm = LLM(params.model_name, params.access_token)
+    llm = LLM(
+        model_name=params.model_name,
+        access_token=params.access_token,
+        lang_src=params.lang_src,
+        lang_tgt=params.lang_tgt,
+    )
 
     print()
     print("Now, let's talk!")
