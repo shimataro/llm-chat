@@ -28,6 +28,8 @@ All dependencies are now up-to-date!
 $ pipenv run llm-chat
 Model Name: elyza/ELYZA-japanese-Llama-2-7b-instruct
 Access Token: None
+Source Language: None
+Target Language: None
 
 ...
 
@@ -137,6 +139,27 @@ main(["-m", "meta-llama/Meta-Llama-3-8B-Instruct", "-t", "YOUR_ACCESS_TOKEN"])
 
 アクセストークンは一度しか表示されないので、忘れないように付箋紙にメモしてディスプレイに貼っておいてください。
 
+### 入力/出力の言語を明示的に指定できる？
+
+`--language-src` で入力の言語コードを、 `--language-tgt` で出力の言語コードを指定できます。
+言語コードの一覧は[こちら](https://github.com/facebookresearch/flores/blob/main/flores200/README.md#languages-in-flores-200)をご参照ください。
+
+特に `facebook/nllb-200-distilled-600M` のような翻訳に特化したモデルでは、出力の言語コードを指定しないと想定外の言語で出力される場合があります。
+
+```bash
+# "--access-token" でアクセストークンを指定
+$ pipenv run llm-chat --model-name facebook/nllb-200-distilled-600M --language-src eng_Latn --language-tgt jpn_Jpan
+```
+
+JupyterLab (Notebook)で動かす場合は、最後のセルの `main()` の呼び出し時に配列で指定してください。
+
+```python
+main(["-m", "facebook/nllb-200-distilled-600M", "--language-src", "eng_Latn", "--language-tgt", "jpn_Jpan"])
+```
+
+これらオプションは、 "Text2Text Generation" または "Translation" のモデルでのみ有効です。
+"Text Generation" のモデルで指定しても無視されます。
+
 ### 動作確認したモデルはある？
 
 2025/05/13時点で動作確認したモデルは以下のとおりです。
@@ -146,6 +169,7 @@ main(["-m", "meta-llama/Meta-Llama-3-8B-Instruct", "-t", "YOUR_ACCESS_TOKEN"])
 |---|---|---|---|
 |[`cyberagent/open-calm-7b`](https://huggingface.co/cyberagent/open-calm-7b)|Text Generation|○|不要|
 |[`elyza/ELYZA-japanese-Llama-2-7b-instruct`](https://huggingface.co/elyza/ELYZA-japanese-Llama-2-7b-instruct)|Text Generation|○|不要|
+|[`facebook/nllb-200-distilled-600M`](https://huggingface.co/facebook/nllb-200-distilled-600M)|Translation|○|不要|
 |[`google-t5/t5-small`](https://huggingface.co/google-t5/t5-small)|Translation|×|不要|
 |[`google/flan-t5-base`](https://huggingface.co/google/flan-t5-base)|Text2Text Generation|×|不要|
 |[`google/gemma-7b-it`](https://huggingface.co/google/gemma-7b-it)|Text Generation|△|要|
