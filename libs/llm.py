@@ -133,6 +133,10 @@ class LLM:
         :return: プロンプト
         """
 
+        # バックスラッシュで始まる場合は、バックスラッシュを除去＆"\n"を改行に変換した結果をプロンプトとする
+        if input_text.startswith("\\"):
+            return input_text[1:].replace("\\n", "\n")
+
         # seq2seqはプロンプト用の加工不要
         if isinstance(self._model, AutoModelForSeq2SeqLM):
             return input_text
