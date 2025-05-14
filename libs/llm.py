@@ -15,8 +15,8 @@ class LLM:
         self,
         model_name: str = "elyza/ELYZA-japanese-Llama-2-7b-instruct",
         access_token: Optional[str] = None,
-        lang_src: Optional[str] = None,
-        lang_tgt: Optional[str] = None,
+        language_source: Optional[str] = None,
+        language_target: Optional[str] = None,
     ):
         """ LLMの初期化
 
@@ -26,8 +26,8 @@ class LLM:
         :param lang_tgt: 出力言語のコード
         """
         self._model_name = model_name
-        self._lang_src = lang_src
-        self._lang_tgt = lang_tgt
+        self._language_source = language_source
+        self._language_target = language_target
 
         # モデルとトークナイザーを読み込み
         ModelClass = _model_class(model_name)
@@ -43,8 +43,8 @@ class LLM:
             token=access_token,
         )
 
-        if lang_src is not None:
-            self._tokenizer.src_lang = lang_src
+        if language_source is not None:
+            self._tokenizer.src_lang = language_source
 
     def infer(
         self,
@@ -86,8 +86,8 @@ class LLM:
             "top_p": top_p,
             "do_sample": do_sample,
         }
-        if self._lang_tgt is not None:
-            token_id = tokenizer.convert_tokens_to_ids(self._lang_tgt)
+        if self._language_target is not None:
+            token_id = tokenizer.convert_tokens_to_ids(self._language_target)
             kwargs["forced_bos_token_id"] = token_id
 
         thread = threading.Thread(target=model.generate, kwargs=kwargs)
