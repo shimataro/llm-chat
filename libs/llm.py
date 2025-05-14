@@ -157,10 +157,7 @@ class LLM:
             return f"[INST] {input_text} [/INST]"
 
         if "rinna" in model_name:
-            return (
-                f"ユーザー: {input_text}\n"
-                "システム: "
-            )
+            return f"ユーザー: {input_text}\nシステム: "
 
         if (
             "llama-2" in model_name or "llama2" in model_name or
