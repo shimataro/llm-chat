@@ -15,13 +15,19 @@ class LLM:
         self,
         model_name: str = "elyza/ELYZA-japanese-Llama-2-7b-instruct",
         access_token: Optional[str] = None,
+        language_source: Optional[str] = None,
+        language_target: Optional[str] = None,
     ):
         """ LLMの初期化
 
         :param model_name: モデル名
         :param access_token: Hugging Faceのアクセストークン
+        :param lang_src: 入力言語のコード
+        :param lang_tgt: 出力言語のコード
         """
         self._model_name = model_name
+        self._language_source = language_source
+        self._language_target = language_target
 
         # モデルとトークナイザーを読み込み
         ModelClass = _model_class(model_name)
@@ -36,6 +42,9 @@ class LLM:
             use_fast=True,
             token=access_token,
         )
+
+        if language_source is not None:
+            self._tokenizer.src_lang = language_source
 
     def infer(
         self,
@@ -69,17 +78,19 @@ class LLM:
         # 出力取得用のストリーマー
         streamer = TextIteratorStreamer(tokenizer, skip_special_tokens=True)
 
-        thread = threading.Thread(
-            target=model.generate,
-            kwargs={
-                **inputs,
-                "streamer": streamer,
-                "max_new_tokens": max_new_tokens,
-                "temperature": temperature,
-                "top_p": top_p,
-                "do_sample": do_sample,
-            }
-        )
+        kwargs = {
+            **inputs,
+            "streamer": streamer,
+            "max_new_tokens": max_new_tokens,
+            "temperature": temperature,
+            "top_p": top_p,
+            "do_sample": do_sample,
+        }
+        if self._language_target is not None:
+            token_id = tokenizer.convert_tokens_to_ids(self._language_target)
+            kwargs["forced_bos_token_id"] = token_id
+
+        thread = threading.Thread(target=model.generate, kwargs=kwargs)
         thread.start()
 
         for token in streamer:
@@ -146,10 +157,7 @@ class LLM:
             return f"[INST] {input_text} [/INST]"
 
         if "rinna" in model_name:
-            return (
-                f"ユーザー: {input_text}\n"
-                "システム: "
-            )
+            return f"ユーザー: {input_text}\nシステム: "
 
         if (
             "llama-2" in model_name or "llama2" in model_name or
