@@ -69,7 +69,7 @@ def main(argv: Optional[list[str]] = None) -> None:
     )
 
     print()
-    print("Now, let's talk!")
+    print("It's time to talk!")
     print("Type 'exit' to end the conversation.")
     print()
 
