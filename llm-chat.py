@@ -3,8 +3,6 @@ import argparse
 from dataclasses import dataclass
 from typing import Optional
 
-from libs.llm import LLM
-
 
 @dataclass
 class Parameters:
@@ -22,20 +20,22 @@ def parse_args(args: Optional[list[str]]) -> Parameters:
     """
     parser = argparse.ArgumentParser(description="LLM Chat")
     parser.add_argument(
-        "--model-name", "-m",
+        "-m", "--model-name",
         help="使用するモデル名",
         default="elyza/ELYZA-japanese-Llama-2-7b-instruct",
     )
     parser.add_argument(
-        "--access-token", "-t",
+        "-t", "--access-token",
         help="Hugging Faceのアクセストークン",
     )
     parser.add_argument(
-        "--language-source", "-S",
+        "-S", "--language-source",
+        metavar="SOURCE_LANGUAGE",
         help="入力言語のコード（Text Generation では無効）",
     )
     parser.add_argument(
-        "--language-target", "-T",
+        "-T", "--language-target",
+        metavar="TARGET_LANGUAGE",
         help="出力言語のコード（Text Generation では無効）",
     )
 
@@ -59,6 +59,8 @@ def main(argv: Optional[list[str]] = None) -> None:
     print()
 
     # モデルの初期化
+    print("Loading model...")
+    from libs.llm import LLM
     llm = LLM(
         model_name=params.model_name,
         access_token=params.access_token,
