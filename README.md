@@ -77,8 +77,8 @@ See you!
 |---|---|---|---|
 |`--model-name`, `-m`|使用するモデル名|[`elyza/ELYZA-japanese-Llama-2-7b-instruct`](https://huggingface.co/elyza/ELYZA-japanese-Llama-2-7b-instruct)|[Hugging Face](https://huggingface.co/models)の中から選択|
 |`--access-token`, `-t`|Hugging Faceのアクセストークン|なし||
-|`--lang-src`|入力の[言語コード](https://github.com/facebookresearch/flores/blob/main/flores200/README.md#languages-in-flores-200)|指定なし|[Text2Text Generation](https://huggingface.co/models?pipeline_tag=text2text-generation&sort=trending)または[Translation](https://huggingface.co/models?pipeline_tag=translation&sort=trending)タスクで有効|
-|`--lang-tgt`|出力の[言語コード](https://github.com/facebookresearch/flores/blob/main/flores200/README.md#languages-in-flores-200)|指定なし|[Text2Text Generation](https://huggingface.co/models?pipeline_tag=text2text-generation&sort=trending)または[Translation](https://huggingface.co/models?pipeline_tag=translation&sort=trending)タスクで有効|
+|`--language-source`, `-S`|入力の[言語コード](https://github.com/facebookresearch/flores/blob/main/flores200/README.md#languages-in-flores-200)|指定なし|[Text2Text Generation](https://huggingface.co/models?pipeline_tag=text2text-generation&sort=trending)または[Translation](https://huggingface.co/models?pipeline_tag=translation&sort=trending)タスクで有効|
+|`--language-target`, `-T`|出力の[言語コード](https://github.com/facebookresearch/flores/blob/main/flores200/README.md#languages-in-flores-200)|指定なし|[Text2Text Generation](https://huggingface.co/models?pipeline_tag=text2text-generation&sort=trending)または[Translation](https://huggingface.co/models?pipeline_tag=translation&sort=trending)タスクで有効|
 
 コマンドラインから指定する場合
 
@@ -183,19 +183,21 @@ main(["-m", "meta-llama/Meta-Llama-3-8B-Instruct", "-t", "YOUR_ACCESS_TOKEN"])
 
 ### 入力/出力の言語を明示的に指定できる？
 
-`--lang-src` で入力の言語コードを、 `--lang-tgt` で出力の言語コードを指定できます。
+`--language-source` （または `-S` ）で入力の言語コードを、 `--language-target` （または `-T` ）で出力の言語コードを指定できます。
 言語コードの一覧は[こちら](https://github.com/facebookresearch/flores/blob/main/flores200/README.md#languages-in-flores-200)をご参照ください。
 
 特に[`facebook/nllb-200-distilled-600M`](https://huggingface.co/facebook/nllb-200-distilled-600M)のような翻訳に特化したモデルでは、出力の言語コードを指定しないと想定外の言語で出力される場合があります。
 
 ```bash
-# "--lang-src" / "--lang-tgt" で入出力言語コードを指定
-$ pipenv run llm-chat --model-name facebook/nllb-200-distilled-600M --lang-src eng_Latn --lang-tgt jpn_Jpan
+# "--language-source" / "--language-target" で入出力言語コードを指定
+$ pipenv run llm-chat --model-name facebook/nllb-200-distilled-600M --language-source eng_Latn --language-target jpn_Jpan
+# "-S" / "-T" でも可
+$ pipenv run llm-chat -m facebook/nllb-200-distilled-600M -S eng_Latn -T jpn_Jpan
 ```
 
 ```python
 # JupyterLab (Notebook)で動かす場合
-main(["-m", "facebook/nllb-200-distilled-600M", "--lang-src", "eng_Latn", "--lang-tgt", "jpn_Jpan"])
+main(["-m", "facebook/nllb-200-distilled-600M", "-S", "eng_Latn", "-T", "jpn_Jpan"])
 ```
 
 これらオプションは、[Text2Text Generation](https://huggingface.co/models?pipeline_tag=text2text-generation&sort=trending)または[Translation](https://huggingface.co/models?pipeline_tag=translation&sort=trending)タスクでのみ有効です。
