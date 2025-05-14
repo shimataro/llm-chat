@@ -31,9 +31,10 @@ Access Token: None
 Source Language: None
 Target Language: None
 
+Loading model...
 ...
 
-Now, let's talk!
+It's time to talk!
 Type 'exit' to end the conversation.
 
 > ユニバって面白い？
