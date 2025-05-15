@@ -232,4 +232,4 @@ main(["-m", "facebook/nllb-200-distilled-600M", "-S", "eng_Latn", "-T", "jpn_Jpa
 * 会話ではなく、入力した文章の続きを生成したい場合
 
 ※プロンプト加工を行うのは[Text Generation](https://huggingface.co/models?pipeline_tag=text-generation&sort=trending)タスクだけです。
-それ以外の[Text2Text Generation](https://huggingface.co/models?pipeline_tag=text2text-generation&sort=trending)や[Translation](https://huggingface.co/models?pipeline_tag=translation&sort=trending)タスクでは本機能は意味がありません（特に害もありません）
+それ以外の[Text2Text Generation](https://huggingface.co/models?pipeline_tag=text2text-generation&sort=trending)や[Translation](https://huggingface.co/models?pipeline_tag=translation&sort=trending)タスクでは、改行を明示的に含ませたいという意図がなければ本機能は意味がありません（使っても特に害はありません）
