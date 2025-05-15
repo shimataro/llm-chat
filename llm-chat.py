@@ -1,17 +1,16 @@
 # チャットアプリケーション
 import argparse
-from dataclasses import dataclass
 from typing import Optional
 
 
 def main(argv: Optional[list[str]] = None) -> None:
     """ メイン関数
 
-    :param args: 解析済み引数
+    :param args: コマンドライン引数
     :return: 終了ステータス
     """
-    # コマンドライン引数を取り出す
-    params = parse_args(argv)
+    # コマンドライン引数を解析
+    params = Parameters(argv)
     print(f"Model Name: {params.model_name}")
     print(f"Access Token: {params.access_token}")
     print(f"Source Language: {params.language_source}")
@@ -55,44 +54,41 @@ def main(argv: Optional[list[str]] = None) -> None:
     print("See you!")
 
 
-@dataclass
 class Parameters:
     """ アプリケーションパラメーター """
-    model_name: str
-    access_token: Optional[str]
-    language_source: Optional[str]
-    language_target: Optional[str]
 
+    def __init__(self, args: Optional[list[str]]):
+        """ 引数を解析
 
-def parse_args(args: Optional[list[str]]) -> Parameters:
-    """ 引数を解析
+        :param args: コマンドライン引数
+        """
+        parser = argparse.ArgumentParser(description="LLM Chat")
+        parser.add_argument(
+            "-m", "--model-name",
+            help="使用するモデル名",
+            default="elyza/ELYZA-japanese-Llama-2-7b-instruct",
+        )
+        parser.add_argument(
+            "-t", "--access-token",
+            help="Hugging Faceのアクセストークン",
+        )
+        parser.add_argument(
+            "-S", "--language-source",
+            metavar="SOURCE_LANGUAGE",
+            help="入力言語のコード（Text Generation では無効）",
+        )
+        parser.add_argument(
+            "-T", "--language-target",
+            metavar="TARGET_LANGUAGE",
+            help="出力言語のコード（Text Generation では無効）",
+        )
 
-    :return: 解析結果
-    """
-    parser = argparse.ArgumentParser(description="LLM Chat")
-    parser.add_argument(
-        "-m", "--model-name",
-        help="使用するモデル名",
-        default="elyza/ELYZA-japanese-Llama-2-7b-instruct",
-    )
-    parser.add_argument(
-        "-t", "--access-token",
-        help="Hugging Faceのアクセストークン",
-    )
-    parser.add_argument(
-        "-S", "--language-source",
-        metavar="SOURCE_LANGUAGE",
-        help="入力言語のコード（Text Generation では無効）",
-    )
-    parser.add_argument(
-        "-T", "--language-target",
-        metavar="TARGET_LANGUAGE",
-        help="出力言語のコード（Text Generation では無効）",
-    )
-
-    # 引数を解析＆Parametersクラスに変換
-    ns = parser.parse_args(args=args)
-    return Parameters(**vars(ns))
+        # 引数を解析
+        ns = parser.parse_args(args=args)
+        self.model_name: str = ns.model_name
+        self.access_token: Optional[str] = ns.access_token
+        self.language_source: Optional[str] = ns.language_source
+        self.language_target: Optional[str] = ns.language_target
 
 
 if __name__ == "__main__":
