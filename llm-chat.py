@@ -62,7 +62,15 @@ class Parameters:
 
         :param args: コマンドライン引数
         """
-        parser = argparse.ArgumentParser(description="LLM Chat")
+        parser = argparse.ArgumentParser(
+            description="LLM Chat",
+            formatter_class=argparse.RawDescriptionHelpFormatter,
+            epilog="""examples:
+  %(prog)s -m microsoft/phi-2
+  %(prog)s -m meta-llama/Meta-Llama-3-8B-Instruct -t YOUR_ACCESS_TOKEN
+  %(prog)s -m facebook/nllb-200-distilled-600M -S eng_Latn -T jpn_Jpan
+"""
+        )
         parser.add_argument(
             "-m", "--model-name",
             help="使用するモデル名",
