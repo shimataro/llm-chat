@@ -1,4 +1,5 @@
 # LLMクラス
+import re
 import threading
 from typing import Generator, Optional
 
@@ -133,9 +134,16 @@ class LLM:
         :return: プロンプト
         """
 
-        # バックスラッシュで始まる場合は、バックスラッシュを除去＆"\n"を改行に変換した結果をプロンプトとする
+        # バックスラッシュで始まる場合は、特別なエスケープ処理
         if input_text.startswith("\\"):
-            return input_text[1:].replace("\\n", "\n")
+            # 先頭のバックスラッシュを除去
+            # 「バックスラッシュ+n」を改行文字へ置き換える
+            # 「バックスラッシュ+上記以外の文字」はバックスラッシュのみ除去する
+            return re.sub(
+                r"\\(.)",
+                lambda m: "\n" if m.group(1) == "n" else m.group(1),
+                input_text[1:],
+            )
 
         # seq2seqはプロンプト用の加工不要
         if isinstance(self._model, AutoModelForSeq2SeqLM):
