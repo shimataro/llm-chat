@@ -1,7 +1,7 @@
 # LLMクラス
 import re
 import threading
-from typing import Generator, Optional
+from typing import Generator
 
 import torch
 from transformers.models.auto.configuration_auto import AutoConfig
@@ -15,9 +15,9 @@ class LLM:
     def __init__(
         self,
         model_name: str = "elyza/ELYZA-japanese-Llama-2-7b-instruct",
-        access_token: Optional[str] = None,
-        language_source: Optional[str] = None,
-        language_target: Optional[str] = None,
+        access_token: str | None = None,
+        language_source: str | None = None,
+        language_target: str | None = None,
     ):
         """ LLMの初期化
 

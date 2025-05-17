@@ -1,9 +1,8 @@
 # チャットアプリケーション
 import argparse
-from typing import Optional
 
 
-def main(argv: Optional[list[str]] = None) -> None:
+def main(argv: list[str] | None = None) -> None:
     """ メイン関数
 
     :param args: コマンドライン引数
@@ -57,7 +56,7 @@ def main(argv: Optional[list[str]] = None) -> None:
 class Parameters:
     """ アプリケーションパラメーター """
 
-    def __init__(self, args: Optional[list[str]]):
+    def __init__(self, args: list[str] | None):
         """ 引数を解析
 
         :param args: コマンドライン引数
@@ -94,9 +93,9 @@ class Parameters:
         # 引数を解析
         ns = parser.parse_args(args=args)
         self.model_name: str = ns.model_name
-        self.access_token: Optional[str] = ns.access_token
-        self.language_source: Optional[str] = ns.language_source
-        self.language_target: Optional[str] = ns.language_target
+        self.access_token: str | None = ns.access_token
+        self.language_source: str | None = ns.language_source
+        self.language_target: str | None = ns.language_target
 
 
 if __name__ == "__main__":
