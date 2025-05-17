@@ -113,7 +113,7 @@ class LLM:
         :param temperature: サンプリングの多様性を制御する温度パラメーター
         :param top_p: nucleus samplingの確率閾値
         """
-        # 入力プロンプト
+        # トークンを1つずつ出力
         for token in self.infer(
             input_text,
             max_new_tokens,
@@ -121,7 +121,6 @@ class LLM:
             temperature,
             top_p,
         ):
-            # トークンを1つずつ出力
             print(token, end="", flush=True)
 
         # 出力の終端で改行
