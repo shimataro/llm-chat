@@ -217,3 +217,20 @@ main(["-m", "facebook/nllb-200-distilled-600M", "-S", "eng_Latn", "-T", "jpn_Jpa
 エラーが起きる場合は、モデル固有の設定を吸収しきれていない可能性があります。
 その場合は固有の設定を調整してください。
 あとPRください。
+
+### 自動プロンプト加工を行ってほしくない
+
+バックスラッシュ `\` で始まる文字列が入力されたら、デフォルトのプロンプト加工は行わず、以下の加工をしたものをプロンプトとしてモデルに渡します。
+
+* 先頭のバックスラッシュを除去
+* `\n` を改行文字に変換
+* 「`\` + `n` 以外の文字」は `\` を除去
+
+以下のような場合に試してみてください。
+
+* 独自のプロンプトが必要なモデルを使う場合
+* デフォルトのプロンプトでは不十分な場合（システムプロンプトを指定したいなど）
+* 会話ではなく、入力した文章の続きを生成したい場合
+
+※プロンプト加工を行うのは[Text Generation](https://huggingface.co/models?pipeline_tag=text-generation&sort=trending)タスクだけです。
+それ以外の[Text2Text Generation](https://huggingface.co/models?pipeline_tag=text2text-generation&sort=trending)や[Translation](https://huggingface.co/models?pipeline_tag=translation&sort=trending)タスクでは、改行を明示的に含ませたいという意図がなければ本機能は意味がありません（使っても特に害はありません）
