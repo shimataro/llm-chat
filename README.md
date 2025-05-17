@@ -224,7 +224,7 @@ main(["-m", "facebook/nllb-200-distilled-600M", "-S", "eng_Latn", "-T", "jpn_Jpa
 
 * 先頭のバックスラッシュを除去
 * `\n` を改行文字に変換
-* 「`\` + `n` 以外の文字」は `\` を除去
+* `\` の次の文字が `n` 以外なら `\` を除去（ `\あ` → `あ`, `\\` → `\`, `\\n` → `\n` ）
 
 以下のような場合に試してみてください。
 
@@ -233,4 +233,4 @@ main(["-m", "facebook/nllb-200-distilled-600M", "-S", "eng_Latn", "-T", "jpn_Jpa
 * 会話ではなく、入力した文章の続きを生成したい場合
 
 ※プロンプト加工を行うのは[Text Generation](https://huggingface.co/models?pipeline_tag=text-generation&sort=trending)タスクだけです。
-それ以外の[Text2Text Generation](https://huggingface.co/models?pipeline_tag=text2text-generation&sort=trending)や[Translation](https://huggingface.co/models?pipeline_tag=translation&sort=trending)タスクでは、改行を明示的に含ませたいという意図がなければ本機能は意味がありません（使っても特に害はありません）
+[Text2Text Generation](https://huggingface.co/models?pipeline_tag=text2text-generation&sort=trending)や[Translation](https://huggingface.co/models?pipeline_tag=translation&sort=trending)タスクでは、改行を明示的に含ませたいという意図がなければ本機能は意味がありません（使っても特に害はありません）
