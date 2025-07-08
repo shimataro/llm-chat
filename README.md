@@ -148,6 +148,7 @@ main(["-m", "microsoft/phi-2"])
 |[`facebook/nllb-200-distilled-600M`](https://huggingface.co/facebook/nllb-200-distilled-600M)|Translation|○|不要|
 |[`google-t5/t5-small`](https://huggingface.co/google-t5/t5-small)|Translation|×|不要|
 |[`google/flan-t5-base`](https://huggingface.co/google/flan-t5-base)|Text2Text Generation|×|不要|
+|[`google/gemma-2-2b-jpn-it`](https://huggingface.co/google/gemma-2-2b-jpn-it)|Text Generation|○|要|
 |[`google/gemma-7b-it`](https://huggingface.co/google/gemma-7b-it)|Text Generation|△|要|
 |[`meta-llama/Meta-Llama-3-8B-Instruct`](https://huggingface.co/meta-llama/Meta-Llama-3-8B-Instruct)|Text Generation|△|要|
 |[`microsoft/phi-2`](https://huggingface.co/microsoft/phi-2)|Text Generation|×|不要|
