@@ -1,7 +1,7 @@
 # LLMクラス
 import re
 import threading
-from typing import Generator
+from typing import Generator, Optional
 
 import torch
 from transformers.models.auto.configuration_auto import AutoConfig
@@ -31,7 +31,7 @@ class LLM:
         self._language_target = language_target
 
         # モデルとトークナイザーを読み込み
-        ModelClass = _model_class(model_name)
+        ModelClass = _model_class(model_name, token=access_token)
         self._model = ModelClass.from_pretrained(
             model_name,
             device_map="auto",
@@ -190,15 +190,16 @@ class LLM:
         return input_text
 
 
-def _model_class(model_name: str) -> type[
+def _model_class(model_name: str, token: Optional[str] = None) -> type[
     AutoModelForCausalLM | AutoModelForSeq2SeqLM
 ]:
     """ モデル名から適切なモデルのクラスを取得
 
     :param model_name: モデル名
+    :param token: Hugging Faceのアクセストークン（オプション）
     :return: モデルクラス
     """
-    config = AutoConfig.from_pretrained(model_name)
+    config = AutoConfig.from_pretrained(model_name, token=token)
     if hasattr(config, "is_encoder_decoder") and config.is_encoder_decoder:
         return AutoModelForSeq2SeqLM
     else:
